@@ -1,0 +1,54 @@
+@model MusicLib.BLL.DTO.SongDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Create"];
+    ViewData["Title"] = Localizer["Create"];
+}
+
+<h2>@Localizer["Add a new Song"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.Label(Localizer["Song:"].ToString())
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.Label(Localizer["Release:"].ToString())
+                <input asp-for="Release" class="form-control" />
+                <span asp-validation-for="Release" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(Localizer["Genre:"].ToString())
+                <select asp-for="GenreId" class="form-control" asp-items="ViewBag.ListGenres as SelectList"></select>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(Localizer["Artist:"].ToString())
+                <select asp-for="ArtistId" class="form-control" asp-items="ViewBag.ListArtists as SelectList"></select>
+            </div>
+            <div class="form-group">
+                @Html.Label(Localizer["Audio:"].ToString())
+                <select asp-for="AudioId" class="form-control" asp-items="ViewBag.ListAudios as SelectList"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@Localizer["Back"]</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

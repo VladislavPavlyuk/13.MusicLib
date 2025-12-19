@@ -1,0 +1,67 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Music Library ASP.NET Core MVC Application</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MusicLib.styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.png" asp-append-version="true">
+</head>
+<body>
+        <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <strong>Music Library</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: 2px solid rgba(255, 255, 255, 0.3);">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav ms-auto d-flex align-items-center gap-2">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home page"]</a>
+                        @if (Context.Session.GetString("Role") == null)
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Registration"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Log in"]</a>
+                        }
+                        else
+                        {
+                            <span class="navbar-text text-white me-2">@Localizer["Hello"], @Context.Session.GetString("Email")</span>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Logout">@Localizer["Logout"]</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    &copy; @DateTime.Now.Year - Music Library
+                </div>
+                <div class="footer-language">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,41 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@* The IViewLocalizer can be injected into the view. It does two things of interest:
+    1. It can HTML encode *parameters* passed to resource strings (not the resource strings themselves, as they may contain
+       HTML) automatically, and return the result as an IHtmlContent so Razor won't HTML encode it again;
+    2. It looks for localization resources for this view based on the view path, e.g. if the view's path is
+       "MyApplication/Views/Home/Index.cshtml", then the corresponding resource base path will be "MyApplication.Views.Home.Index" *@
+
+@inject IViewLocalizer Localizer
+@{    
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mb-4">
+    <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center p-3">
+        @if (Context.Session.GetInt32("Role") != null)
+        {
+            @if (Context.Session.GetInt32("Role") != 3)
+            {
+                @if (Context.Session.GetInt32("Role") == 1)
+                {
+                    <a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Index">@Localizer["Users"]</a>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Genres" asp-action="Index">@Localizer["Genres"]</a>
+                }
+                <a class="btn btn-primary" asp-area="" asp-controller="Audios" asp-action="Index">@Localizer["Audios"]</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Artists" asp-action="Index">@Localizer["Artists"]</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Songs" asp-action="Index">@Localizer["Songs"]</a>
+            }
+            else
+            {
+                <div class="alert alert-warning w-100" role="alert">@Localizer["Sorry! Your registration is still pending approvement."]</div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger w-100" role="alert">@Localizer["Sorry! Access is denied!"]</div>
+        }
+    </div>
+</div>
+

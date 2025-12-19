@@ -1,0 +1,41 @@
+@model MusicLib.BLL.DTO.AudioDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Delete"];
+    ViewData["Title"] = Localizer["Delete"];
+}
+@if (TempData["Message"] != null)
+{
+    <div class="warning alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h2>@Localizer["Delete Audio"]</h2>
+
+<h3>@Localizer["Do you really want to delete this Audio?"]</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["FileName:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Path:"].ToString())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Path)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" /> |
+        <a asp-action="Index">@Localizer["Back"]</a>
+    </form>
+</div>

@@ -1,0 +1,37 @@
+@model MusicLib.BLL.DTO.ArtistDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Details"];
+    ViewData["Title"] = Localizer["Details"];
+}
+
+<h2>@Localizer["Details"]</h2>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Name:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["BirthDate:"].ToString())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Context.Session.GetInt32("Role") == 1)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["Edit"]</a>
+        <a>|</a>
+    }
+    <a asp-action="Index">@Localizer["Back"]</a>
+</div>
+

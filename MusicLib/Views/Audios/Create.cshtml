@@ -1,0 +1,31 @@
+@model MusicLib.BLL.DTO.AudioDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewBag.Title = Localizer["Create"];
+    ViewData["Title"] = Localizer["Create"];
+}
+@if (TempData["Message"] != null)
+{
+    <div class="warning alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h3>@Localizer["Add new Audio"]</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Audios" method="post" enctype="multipart/form-data">            
+            
+            <div class="form-group">
+                <input type="file" name="uploadedFile" /><br>
+                <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@*Благодаря установке атрибута формы enctype="multipart/form-data" 
+браузер будет знать, что вместе с формой надо передать файл.*@
+
+

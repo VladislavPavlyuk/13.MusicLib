@@ -1,0 +1,68 @@
+@model MusicLib.BLL.DTO.SongDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Details"];
+    ViewData["Title"] = Localizer["Details"];
+}
+
+<h2>@Localizer["Details"]</h2>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Song:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Release:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Release)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.Label(Localizer["File:"].ToString())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Audio)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.Label(Localizer["Youtube Link:"].ToString())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.YoutubeLink)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Genre:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.Label(Localizer["Artist:"].ToString())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Artist)
+        </dd>
+
+
+
+
+    </dl>    
+</div>
+<p>
+    @if (Context.Session.GetInt32("Role") == 1)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["Edit"]</a>
+        <a>|</a>
+    }
+    <a asp-action="Index">@Localizer["Back"]</a>
+</p>

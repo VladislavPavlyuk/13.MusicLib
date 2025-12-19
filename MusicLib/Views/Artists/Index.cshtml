@@ -1,0 +1,47 @@
+@model IEnumerable<MusicLib.BLL.DTO.ArtistDTO> 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Index"];
+    ViewData["Title"] = Localizer["Index"];
+}
+
+<h2>@Localizer["List of Artists"]</h2>
+<p>
+    <a asp-action="Create">@Localizer["Add a new Artist"]</a>
+</p>
+<table class="table-condensed" style="width:100%">
+    <tr>
+        <th>
+            @Html.Label(Localizer["Name"].ToString())
+        </th>
+        <th>
+            @Html.Label(Localizer["BirthDate"].ToString())
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a>
+
+                @if (Context.Session.GetInt32("Role") == 1)
+                {
+                    <a>|</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                    <a>|</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                }
+            </td>
+        </tr>
+    }
+</table>

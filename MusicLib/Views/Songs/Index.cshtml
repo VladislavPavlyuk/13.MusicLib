@@ -1,0 +1,135 @@
+@using MusicLib.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model MusicLib.Models.IndexViewModel 
+
+@{
+    ViewData["Title"] = Localizer["Index"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>@Localizer["List of Songs"]</h2>
+    <a class="btn btn-primary" asp-action="Create">@Localizer["Add a new Song"]</a>
+</div>
+
+<div class="card mb-4">
+    <form method="get" class="p-3">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Artist:"]</label>
+                <select name="artist" asp-items="Model.FilterViewModel.Artists" class="form-control"></select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Genre:"]</label>
+                <select name="genre" asp-items="Model.FilterViewModel.Genres" class="form-control"></select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">@Localizer["Filter"]</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table-condensed" style="width:100%">
+    <thead>
+        <tr>
+            <th style="background-color: #ffffff; color: #212529; font-weight: bold; padding: 12px;">
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current" 
+                property="@Model.SortViewModel.SongTitleSort">@Localizer["Song"]
+                </sort-header>
+            </th>
+            <th style="background-color: #ffffff; color: #212529; font-weight: bold; padding: 12px;">                
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.SongReleaseDateSort">@Localizer["Release"]
+                </sort-header>
+            </th>
+            <th style="background-color: #ffffff; color: #212529; font-weight: bold; padding: 12px;">
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.GenreTitleSort">@Localizer["Genre"]
+                </sort-header>
+            </th>
+            <th style="background-color: #ffffff; color: #212529; font-weight: bold; padding: 12px;">
+                <sort-header 
+                action="Index"
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.ArtistNameSort">@Localizer["Artist"]
+                </sort-header>
+            </th>
+            <th style="background-color: #ffffff; color: #212529; font-weight: bold; padding: 12px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+@if (Model.Songs != null)
+{    
+    @foreach (var item in Model.Songs)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Release)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Artist)
+        </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.YoutubeLink))
+                {
+                    <a href="@item.YoutubeLink" target="_blank" style="text-decoration: none;">
+                        <img src="~/Files/youtube.jfif" alt="@Localizer["Play on YouTube"]" style="width: 64px; height: 32px; cursor: pointer;" />
+                    </a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Audio)
+            </td>
+            <td>
+                <div class="d-flex flex-wrap gap-1">
+                    @if (item.AudioId.HasValue)
+                    {
+                        <a class="btn btn-outline-primary btn-sm" asp-action="Watch" asp-controller="Audios" asp-route-id="@item.AudioId">@Localizer["MP4"]</a>
+                    }
+                    <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a>
+                    @if (Context.Session.GetInt32("Role") == 1)
+                    {
+                        <a class="btn btn-outline-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                        <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                    }
+                </div>
+            </td>
+    </tr>
+    }
+}
+else
+{
+    <tr>No songs available.</tr>
+}
+    </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-4 d-flex justify-content-center">
+    <page-link page-model="Model.PageViewModel" page-action="Index"
+               page-url-artist="@(Model.FilterViewModel.SelectedArtist)"
+               page-url-genre="@(Model.FilterViewModel.SelectedGenre)"
+               page-url-sortorder="@(Model.SortViewModel.Current)"></page-link>
+</div>

@@ -1,0 +1,29 @@
+@model MusicLib.BLL.DTO.GenreDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Delete"];
+    ViewData["Title"] = Localizer["Delete"];
+}
+
+<h2>@Localizer["Delete"]</h2>
+
+<h3>@Localizer["Do you really want to delete this Genre?"]</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.Label(Localizer["Genre:"].ToString())
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" /> |
+        <a asp-action="Index">@Localizer["Back"]</a>
+    </form>
+</div>

@@ -1,0 +1,56 @@
+@model IEnumerable<MusicLib.BLL.DTO.AudioDTO> 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Index"];
+    ViewData["Title"] = Localizer["Index"];
+}
+@if (TempData["Message"] != null)
+{
+    <div class="warning alert-success">
+        @TempData["Message"]
+    </div>
+}
+<h2>@Localizer["List of MP4 audio files"]</h2>
+<p>
+    <a asp-action="Create">@Localizer["Add a new MP4"]</a>
+</p>
+<table class="table-condensed" style="width:100%">
+    <tr>
+        <th>
+            @Html.Label(Localizer["Audio"].ToString())
+        </th>
+        <th>
+            @Html.Label(Localizer["FileName"].ToString())
+        </th>
+        <th>
+            @Html.Label(Localizer["Path"].ToString())
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Path)
+            </td>
+            <td>
+                <a asp-action="Watch" asp-route-id="@item.Id">@Localizer["Watch"]</a> 
+
+                @if (Context.Session.GetInt32("Role") == 1)
+                {
+                       <a>|</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                    <a>|</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
