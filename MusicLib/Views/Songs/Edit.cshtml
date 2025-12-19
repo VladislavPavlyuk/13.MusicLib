@@ -3,11 +3,11 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewBag.Title = Localizer["Edit"];
-    ViewData["Title"] = Localizer["Edit"];
+    ViewBag.Title = @Localizer["Edit"];
+    ViewData["Title"] = @Localizer["Edit"];
 }
 
-<h2>@Localizer["Edit Song"]</h2>
+<h2>@Localizer["Edit"]</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,37 +16,37 @@
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group">
-                @Html.Label(Localizer["Song:"].ToString())
+                @Localizer["Song"]
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                @Html.Label(Localizer["Release:"].ToString())
+                @Localizer["Release"]
                 <input asp-for="Release" class="form-control" />
                 <span asp-validation-for="Release" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                @Html.Label(Localizer["Youtube Link:"].ToString())
+                @Localizer["Youtube Link"]
                 <input asp-for="YoutubeLink" class="form-control" />
                 <span asp-validation-for="YoutubeLink" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                @Html.Label(Localizer["Genre:"].ToString())
+                @Localizer["Genre"]
                 <select asp-for="GenreId" class="form-control" asp-items="ViewBag.ListGenres as SelectList"></select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                @Html.Label(Localizer["Artist:"].ToString())
+                @Localizer["Artist"]
                 <select asp-for="ArtistId" class="form-control" asp-items="ViewBag.ListArtists as SelectList"></select>
                 <span asp-validation-for="ArtistId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                @Html.Label(Localizer["File:"].ToString())
+                @Localizer["Audio File"]
                 <select asp-for="AudioId" class="form-control" asp-items="ViewBag.ListAudios as SelectList"></select>
                 <span asp-validation-for="AudioId" class="text-danger"></span>
             </div>
@@ -59,7 +59,7 @@
 </div>
 
 <div>
-    @Html.ActionLink(Localizer["Back"].ToString(), "Index")
+    <a asp-action="Index">@Localizer["Back"]</a>
 </div>
 @section Scripts {
     @{

@@ -17,12 +17,12 @@
             <input type="hidden" asp-for="Password" />
             <input type="hidden" asp-for="Salt" />
             <div class="form-group">
-                @Html.Label(Localizer["E-mail:"].ToString())
+                @Localizer["E-mail"]
                 <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.Label(Localizer["Role:"].ToString())
+                @Localizer["Role"]
                 <select asp-for="RoleId" class="form-control" asp-items="ViewBag.ListRoles as SelectList"></select>
                 <span asp-validation-for="RoleId" class="text-danger"></span>
             </div>

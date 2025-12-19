@@ -3,8 +3,8 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewBag.Title = Localizer["Details"];
-    ViewData["Title"] = Localizer["Details"];
+    ViewBag.Title = @Localizer["Details"];
+    ViewData["Title"] = @Localizer["Details"];
 }
 
 <h2>@Localizer["Details"]</h2>
@@ -13,13 +13,13 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.Label(Localizer["Name:"].ToString())
+            @Localizer["Name:"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.Label(Localizer["BirthDate:"].ToString())
+            @Localizer["BirthDate:"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BirthDate)

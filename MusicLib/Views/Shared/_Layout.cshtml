@@ -28,7 +28,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav ms-auto d-flex align-items-center gap-2">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home page"]</a>
+                       
                         @if (Context.Session.GetString("Role") == null)
                         {
                             <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Registration"]</a>

@@ -141,7 +141,7 @@
   <data name="Users" xml:space="preserve">
     <value>Users</value>
   </data>
-  <data name="Audios" xml:space="preserve">
-    <value>Audios</value>
+  <data name="Audio Files" xml:space="preserve">
+    <value>Audio Files</value>
   </data>
 </root>

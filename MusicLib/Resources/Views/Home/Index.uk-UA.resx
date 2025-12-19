@@ -141,7 +141,7 @@
   <data name="Users" xml:space="preserve">
     <value>Користувачі</value>
   </data>
-  <data name="Audios" xml:space="preserve">
-    <value>Відео</value>
+  <data name="Audio Files" xml:space="preserve">
+    <value>Аудіофайли</value>
   </data>
 </root>

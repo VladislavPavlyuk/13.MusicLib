@@ -105,7 +105,7 @@
                 <div class="d-flex flex-wrap gap-1">
                     @if (item.AudioId.HasValue)
                     {
-                        <a class="btn btn-outline-primary btn-sm" asp-action="Watch" asp-controller="Audios" asp-route-id="@item.AudioId">@Localizer["MP4"]</a>
+                        <a class="btn btn-outline-primary btn-sm" asp-action="Watch" asp-controller="Audios" asp-route-id="@item.AudioId">@Localizer["Audio File"]</a>
                     }
                     <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a>
                     @if (Context.Session.GetInt32("Role") == 1)

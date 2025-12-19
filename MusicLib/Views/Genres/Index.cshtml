@@ -7,14 +7,18 @@
     ViewData["Title"] = Localizer["Index"];
 }
 
-<h2>@Localizer["List of Genres"]</h2>
-<p>
-    <a asp-action="Create">@Localizer["Add a new Genre"]</a>
-</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>@Localizer["List of Genres"]</h2>
+
+    <a class="btn btn-primary" asp-action="Create">@Localizer["Add a new Genre"]</a>
+
+</div>
+
 <table class="table-condensed" style="width:100%">
     <tr>
         <th>
-            @Html.Label(Localizer["Genre"].ToString())
+            @Localizer["Genre"]
         </th>
 
         <th></th>
@@ -27,9 +31,14 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                <div class="d-flex flex-wrap gap-1">
+                    <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a>
+                    @if (Context.Session.GetInt32("Role") == 1)
+                    {
+                        <a class="btn btn-outline-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                        <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                    }
+                </div>
             </td>
         </tr>
     }
