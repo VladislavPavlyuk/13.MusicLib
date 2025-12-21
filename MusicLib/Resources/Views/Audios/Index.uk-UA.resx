@@ -135,8 +135,8 @@
   <data name="Path" xml:space="preserve">
     <value>Шлях</value>
   </data>
-  <data name="Watch" xml:space="preserve">
-    <value>Переглянути</value>
+  <data name="Listen" xml:space="preserve">
+    <value>Прослухати</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редагувати</value>

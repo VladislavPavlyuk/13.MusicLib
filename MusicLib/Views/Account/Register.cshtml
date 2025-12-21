@@ -20,17 +20,29 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label">@Localizer["Password"]</label>
-                <input asp-for="Password" class="form-control" placeholder="Admin" type="password" id="Password" name="Password" />
-                <input type="checkbox" id="ShowPassword" onclick="togglePasswordVisibility()">@Localizer["Show Password"]
+                <div class="position-relative">
+                    <input asp-for="Password" class="form-control" placeholder="Admin" type="password" id="Password" name="Password" style="padding-right: 45px;" />
+                    <button type="button" class="btn btn-link position-absolute" id="togglePassword" onclick="togglePasswordVisibility()" style="right: 5px; top: 50%; transform: translateY(-50%); border: none; background: none; padding: 5px 10px; color: #6c757d; text-decoration: none; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#0d6efd'" onmouseout="this.style.color='#6c757d'">
+                        <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
-                
             </div>
             <div class="form-group">
                 <label asp-for="PasswordConfirm" class="control-label">@Localizer["Password Confirm"]</label>
-                <input asp-for="PasswordConfirm" class="form-control" placeholder="Admin" type="password" id="PasswordConfirm" name="PasswordConfirm" />
-                <input type="checkbox" id="ShowPasswordConfirm" onclick="togglePasswordConfirmVisibility()">@Localizer["Show Password"]
+                <div class="position-relative">
+                    <input asp-for="PasswordConfirm" class="form-control" placeholder="Admin" type="password" id="PasswordConfirm" name="PasswordConfirm" style="padding-right: 45px;" />
+                    <button type="button" class="btn btn-link position-absolute" id="togglePasswordConfirm" onclick="togglePasswordConfirmVisibility()" style="right: 5px; top: 50%; transform: translateY(-50%); border: none; background: none; padding: 5px 10px; color: #6c757d; text-decoration: none; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#0d6efd'" onmouseout="this.style.color='#6c757d'">
+                        <svg id="eyeIconConfirm" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-                
             </div>
             <div class="form-group">
                 <input type="submit" value="@Localizer["Check in"]" class="btn btn-primary" />
@@ -42,22 +54,31 @@
 <script>
     function togglePasswordVisibility() {
         var passwordField = document.getElementById("Password");
-        var showPasswordCheckbox = document.getElementById("ShowPassword");
-
-        if (showPasswordCheckbox.checked) {
+        var eyeIcon = document.getElementById("eyeIcon");
+        
+        if (passwordField.type === "password") {
             passwordField.type = "text";
+            // Иконка закрытого глаза (перечеркнутый глаз)
+            eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
         } else {
             passwordField.type = "password";
+            // Иконка открытого глаза
+            eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
         }
     }
+    
     function togglePasswordConfirmVisibility() {
         var passwordConfirmField = document.getElementById("PasswordConfirm");
-        var showPasswordConfirmCheckbox = document.getElementById("ShowPasswordConfirm");
-
-        if (showPasswordConfirmCheckbox.checked) {
+        var eyeIconConfirm = document.getElementById("eyeIconConfirm");
+        
+        if (passwordConfirmField.type === "password") {
             passwordConfirmField.type = "text";
+            // Иконка закрытого глаза (перечеркнутый глаз)
+            eyeIconConfirm.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
         } else {
             passwordConfirmField.type = "password";
+            // Иконка открытого глаза
+            eyeIconConfirm.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
         }
     }
 </script>

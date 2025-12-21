@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
             <td>
-                <a asp-action="Watch" asp-route-id="@item.Id">@Localizer["Watch"]</a> 
+                <a asp-action="Listen" asp-route-id="@item.Id">@Localizer["Listen"]</a>
 
                 @if (Context.Session.GetInt32("Role") == 1)
                 {

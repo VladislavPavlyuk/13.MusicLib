@@ -13,9 +13,8 @@ export function UsersManagement() {
 
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState<Omit<User, 'id'>>({
+  const [formData, setFormData] = useState<Omit<User, 'id' | 'password'>>({
     email: '',
-    password: '',
     roleId: null,
     role: null,
   });
@@ -24,16 +23,27 @@ export function UsersManagement() {
     e.preventDefault();
     try {
       if (editingUser) {
-        await updateMutation.mutateAsync({ id: editingUser.id, user: { ...formData, id: editingUser.id } });
+        await updateMutation.mutateAsync({ 
+          id: editingUser.id, 
+          user: { 
+            id: editingUser.id,
+            email: formData.email,
+            roleId: formData.roleId,
+            password: editingUser.password,
+            salt: editingUser.salt,
+            role: editingUser.role,
+          }
+        });
         showSuccess('User updated successfully!');
       } else {
         await createMutation.mutateAsync(formData);
         showSuccess('User created successfully!');
       }
       resetForm();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error saving user:', err);
-      showError('Error', err.response?.data?.error || 'Failed to save user');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to save user';
+      showError('Error', errorMessage);
     }
   };
 
@@ -41,7 +51,6 @@ export function UsersManagement() {
     setEditingUser(user);
     setFormData({
       email: user.email || '',
-      password: '',
       roleId: user.roleId,
       role: user.role,
     });
@@ -60,16 +69,17 @@ export function UsersManagement() {
     try {
       await deleteMutation.mutateAsync(id);
       showSuccess('User deleted successfully!');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error deleting user:', err);
-      showError('Error', err.response?.data?.error || 'Failed to delete user');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to delete user';
+      showError('Error', errorMessage);
     }
   };
 
   const resetForm = () => {
     setEditingUser(null);
     setShowForm(false);
-    setFormData({ email: '', password: '', roleId: null, role: null });
+    setFormData({ email: '', roleId: null, role: null });
   };
 
   if (isLoading) return <div className="loading">Loading users...</div>;
@@ -91,18 +101,9 @@ export function UsersManagement() {
             <label>Email:</label>
             <input
               type="email"
-              value={formData.email}
+              value={formData.email || ''}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required={!editingUser}
             />
           </div>
           <div className="form-group">

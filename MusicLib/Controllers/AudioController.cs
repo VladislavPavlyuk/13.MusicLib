@@ -27,7 +27,7 @@ namespace MusicLib.Controllers
         }
 
         // GET: Audios/Details/5
-        public async Task<IActionResult> Watch(int? id)
+        public async Task<IActionResult> Listen(int? id)
         {
             try
             {
