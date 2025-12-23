@@ -18,9 +18,38 @@ export function UsersManagement() {
     roleId: null,
     role: null,
   });
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Валидация для создания нового пользователя
+    if (!editingUser) {
+      const emailValue = formData.email?.trim() || '';
+      const passwordValue = password.trim();
+      
+      if (!emailValue) {
+        showError('Validation Error', 'Email is required');
+        return;
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailValue)) {
+        showError('Validation Error', 'Please enter a valid email address');
+        return;
+      }
+      
+      if (!passwordValue) {
+        showError('Validation Error', 'Password is required');
+        return;
+      }
+      
+      if (passwordValue.length < 6) {
+        showError('Validation Error', 'Password must be at least 6 characters long');
+        return;
+      }
+    }
+    
     try {
       if (editingUser) {
         await updateMutation.mutateAsync({ 
@@ -36,7 +65,7 @@ export function UsersManagement() {
         });
         showSuccess('User updated successfully!');
       } else {
-        await createMutation.mutateAsync(formData);
+        await createMutation.mutateAsync({ ...formData, password });
         showSuccess('User created successfully!');
       }
       resetForm();
@@ -80,6 +109,7 @@ export function UsersManagement() {
     setEditingUser(null);
     setShowForm(false);
     setFormData({ email: '', roleId: null, role: null });
+    setPassword('');
   };
 
   if (isLoading) return <div className="loading">Loading users...</div>;
@@ -95,7 +125,7 @@ export function UsersManagement() {
       </div>
 
       {showForm && (
-        <form className="management-form" onSubmit={handleSubmit}>
+        <form className="management-form" onSubmit={handleSubmit} noValidate>
           <h3>{editingUser ? 'Edit User' : 'Add New User'}</h3>
           <div className="form-group">
             <label>Email:</label>
@@ -103,9 +133,18 @@ export function UsersManagement() {
               type="email"
               value={formData.email || ''}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
             />
           </div>
+          {!editingUser && (
+            <div className="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          )}
           <div className="form-group">
             <label>Role ID:</label>
             <input

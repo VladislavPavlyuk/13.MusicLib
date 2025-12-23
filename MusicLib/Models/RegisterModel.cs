@@ -10,7 +10,7 @@ namespace MusicLib.Models
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "The Password field is required.")]
-        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.",
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.",
                                                                      MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
