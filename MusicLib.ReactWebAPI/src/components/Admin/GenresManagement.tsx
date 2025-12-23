@@ -28,9 +28,10 @@ export function GenresManagement() {
         showSuccess('Genre created successfully!');
       }
       resetForm();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error saving genre:', err);
-      showError('Error', err.response?.data?.error || 'Failed to save genre');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to save genre';
+      showError('Error', errorMessage);
     }
   };
 
@@ -52,9 +53,10 @@ export function GenresManagement() {
     try {
       await deleteMutation.mutateAsync(id);
       showSuccess('Genre deleted successfully!');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error deleting genre:', err);
-      showError('Error', err.response?.data?.error || 'Failed to delete genre');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to delete genre';
+      showError('Error', errorMessage);
     }
   };
 
@@ -70,20 +72,20 @@ export function GenresManagement() {
   return (
     <div className="management-container">
       <div className="management-header">
-        <h2>Genres Management</h2>
+        <h2>Genres</h2>        
         <button className="btn-primary" onClick={() => setShowForm(true)}>
           Add New Genre
         </button>
       </div>
 
       {showForm && (
-        <form className="management-form" onSubmit={handleSubmit}>
+        <form className="management-form" onSubmit={handleSubmit}>          
           <h3>{editingGenre ? 'Edit Genre' : 'Add New Genre'}</h3>
           <div className="form-group">
             <label>Title:</label>
             <input
               type="text"
-              value={formData.title}
+              value={formData.title || ''}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
             />

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Song, Artist, Genre, User } from '../types';
 
-// API base URL - you can change it in .env file as VITE_API_URL
+// This is where our backend server is running
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://localhost:7169/api';
 
 const apiClient = axios.create({
@@ -11,7 +11,7 @@ const apiClient = axios.create({
   },
 });
 
-// Handle API responses - log errors to console
+// Show errors in console when something goes wrong
 apiClient.interceptors.response.use(
   (response) => {
     console.log('API Success:', {
@@ -23,7 +23,7 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      // Server returned an error status code
+      // Server said no
       console.error('API Error Response:', {
         status: error.response.status,
         statusText: error.response.statusText,
@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
         headers: error.response.headers,
       });
     } else if (error.request) {
-      // Request was sent but no response received
+      // We sent request but got nothing back
       console.error('Network Error (No Response):', {
         message: error.message,
         url: error.config?.url,
@@ -44,14 +44,14 @@ apiClient.interceptors.response.use(
         request: error.request,
       });
     } else {
-      // Error setting up the request
+      // Something broke before we could send request
       console.error('Request Setup Error:', error.message);
     }
     return Promise.reject(error);
   }
 );
 
-// Log all API requests
+// Log every request we make
 apiClient.interceptors.request.use(
   (config) => {
     console.log('API Request:', {

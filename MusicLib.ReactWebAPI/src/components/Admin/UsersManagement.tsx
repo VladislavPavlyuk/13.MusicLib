@@ -23,7 +23,7 @@ export function UsersManagement() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Валидация для создания нового пользователя
+    // Check if email and password are correct when creating new user
     if (!editingUser) {
       const emailValue = formData.email?.trim() || '';
       const passwordValue = password.trim();
@@ -118,7 +118,7 @@ export function UsersManagement() {
   return (
     <div className="management-container">
       <div className="management-header">
-        <h2>Users Management</h2>
+        <h2>Users</h2>
         <button className="btn-primary" onClick={() => setShowForm(true)}>
           Add New User
         </button>

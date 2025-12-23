@@ -40,9 +40,10 @@ export function SongsManagement() {
         showSuccess('Song created successfully!');
       }
       resetForm();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error saving song:', err);
-      showError('Error', err.response?.data?.error || 'Failed to save song');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to save song';
+      showError('Error', errorMessage);
     }
   };
 
@@ -74,9 +75,10 @@ export function SongsManagement() {
     try {
       await deleteMutation.mutateAsync(id);
       showSuccess('Song deleted successfully!');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error deleting song:', err);
-      showError('Error', err.response?.data?.error || 'Failed to delete song');
+      const errorMessage = (err as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Failed to delete song';
+      showError('Error', errorMessage);
     }
   };
 
@@ -102,7 +104,7 @@ export function SongsManagement() {
   return (
     <div className="management-container">
       <div className="management-header">
-        <h2>Songs Management</h2>
+        <h2>Songs</h2>
         <button className="btn-primary" onClick={() => setShowForm(true)}>
           Add New Song
         </button>
@@ -115,7 +117,7 @@ export function SongsManagement() {
             <label>Title:</label>
             <input
               type="text"
-              value={formData.title}
+              value={formData.title || ''}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
             />
@@ -124,7 +126,7 @@ export function SongsManagement() {
             <label>Release:</label>
             <input
               type="text"
-              value={formData.release}
+              value={formData.release || ''}
               onChange={(e) => setFormData({ ...formData, release: e.target.value })}
             />
           </div>
@@ -132,7 +134,7 @@ export function SongsManagement() {
             <label>YouTube Link:</label>
             <input
               type="url"
-              value={formData.youtubeLink}
+              value={formData.youtubeLink || ''}
               onChange={(e) => setFormData({ ...formData, youtubeLink: e.target.value })}
             />
           </div>

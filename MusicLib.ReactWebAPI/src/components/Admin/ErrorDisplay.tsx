@@ -9,7 +9,7 @@ export function ErrorDisplay({ error, entityName }: ErrorDisplayProps) {
       return error.message;
     }
     if (typeof error === 'object' && error !== null) {
-      const err = error as any;
+      const err = error as { response?: { data?: { error?: string } }; message?: string; request?: unknown };
       if (err.response?.data?.error) {
         return err.response.data.error;
       }
